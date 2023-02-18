@@ -3,6 +3,7 @@ import sbt._
 // import scoverage.ScoverageKeys._
 
 import scala.util.Try
+import xerial.sbt.Sonatype.autoImport._
 
 object Common {
   val appName = EnvironmentGlobal.appName
@@ -165,13 +166,7 @@ object Common {
   )
 
   lazy val publicationSettings = Seq(
-    publishTo := {
-      val nexus = EnvironmentGlobal.sonatypeHost
-      if (isSnapshot.value)
-        Some("snapshots".at(nexus + "/repository/maven-snapshots"))
-      else
-        Some("releases".at(nexus + "/repository/maven-releases"))
-    },
+    publishTo := sonatypePublishToBundle.value,
     pomExtra :=
       <scm>
         <connection>scm:git:github.com/aparo/zio-json-extra.git</connection>
