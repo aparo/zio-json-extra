@@ -13,15 +13,6 @@ object ProjectUtils {
 
   private val pathToSkipInNames = Set("libraries", "pocs", "component")
 
-  def preventPublication: PE =
-    _.settings(
-      publishTo := Some(
-        Resolver.file("Unused transient repository", target.value / "fakepublish")
-      ),
-      publishArtifact := false,
-      packagedArtifacts := Map.empty
-    ) // doesn't work - https://github.com/sbt/sbt-pgp/issues/42
-
   private def generateName(path: String): String =
     path.split("/").filterNot(v => pathToSkipInNames.contains(v)).mkString("-")
 
@@ -54,10 +45,6 @@ object ProjectUtils {
         name := fullname
       )
       .settings(Common.commonGeneric)
-      .settings(
-        if (publish) Common.publicationSettings
-        else Common.noPublishSettings
-      )
   }
 
   def setupCross(project: CrossProject): CrossProject =
@@ -84,10 +71,6 @@ object ProjectUtils {
         Common.commonJsSettings
       )
       .jvmSettings(Common.commonJvmSettings)
-      .settings(
-        if (publish) Common.publicationSettings
-        else Common.noPublishSettings
-      )
 
   }
 

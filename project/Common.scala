@@ -12,7 +12,6 @@ object Common {
     homepage := Some(url("https://www.megl.io")),
     licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0")),
     organization := "io.megl",
-    scalaVersion := "3.2.1",
     crossScalaVersions := Versions.crossScalaVersions,
     organizationName := "Paro Consulting",
     startYear := Some(2022),
@@ -55,25 +54,6 @@ object Common {
           s"-Djava.io.tmpdir=$tmpdir" :: Nil
       }
     },
-    resolvers ++= {
-      val name = EnvironmentGlobal.appName
-      val host = EnvironmentGlobal.sonatypeHost
-      Seq(
-        //        Opts.resolver.mavenLocalFile,
-        s"$name Nexus Repository".at(s"$host/repository/maven-releases/")
-      )
-    },
-    credentials ++= (
-      for {
-        username <- Option(System.getenv().get("SONATYPE_USERNAME"))
-        password <- Option(System.getenv().get("SONATYPE_PASSWORD"))
-      } yield Credentials(
-        "Sonatype Nexus Repository Manager",
-        "oss.sonatype.org",
-        username,
-        password
-      )
-    ).toSeq,
     scalacOptions ++= (CrossVersion.partialVersion(scalaVersion.value) match {
       case Some((2, 12)) =>
         Seq(
@@ -133,14 +113,6 @@ object Common {
     maxErrors := 1000
   ) ++ Licensing.settings
 
-  lazy val noPublishSettings = Seq(
-    publish / skip := true,
-    publishArtifact := false,
-    publish := {},
-    publishLocal := {},
-    publishArtifact := false
-  )
-
   //java options only for JVM
   lazy val javaOptionsJVM = Seq(
     "-encoding",
@@ -163,22 +135,6 @@ object Common {
     "-encoding",
     "UTF-8",
     "-target:jvm-1.8"
-  )
-
-  lazy val publicationSettings = Seq(
-    publishTo := sonatypePublishToBundle.value,
-    pomExtra :=
-      <scm>
-        <connection>scm:git:github.com/aparo/zio-json-extra.git</connection>
-        <developerConnection>scm:git:github.com/aparo/zio-json-extra.git</developerConnection>
-        <url>https://github.com/aparo/zio-json-extra.git</url>
-      </scm>
-        <developers>
-          <developer>
-            <id>aparo</id>
-            <name>Alberto Paro</name>
-          </developer>
-        </developers>
   )
 
   def priorTo2_13(scalaVersion: String): Boolean =

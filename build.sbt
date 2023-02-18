@@ -1,21 +1,40 @@
 import sbtcrossproject.{ CrossType }
 import ReleaseTransformations._
 
+publish / skip := true
+
 inThisBuild(
   Seq(
     organization := "io.megl",
+    homepage := Some(url("https://github.com/aparo/zio-json-extra.git")),
+    licenses := List("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
+    developers := List(
+      Developer(
+        "aparo",
+        "Alberto Paro",
+        "albeto.paro@gmail.com",
+        url("https://github.com/aparo")
+      )
+    ),
+    ThisBuild / versionScheme := Some("early-semver"),
     parallelExecution := false,
-    scalafmtOnCompile := false,
-    Compile / packageDoc / publishArtifact := false,
-    Compile / doc / sources := Seq.empty
+    scalafmtOnCompile := false
   )
 )
 
 lazy val root =
   project
     .in(file("."))
-    .settings(Common.noPublishSettings)
+    .settings((publish / skip) := true)
     .aggregate(
+      `zio-json-extra-jvm`,
+      `zio-json-extra-js`,
+//      `zio-json-diffson-jvm`,
+//      `zio-json-diffson-js`,
+      `zio-json-exception-jvm`,
+      `zio-json-exception-js`
+    )
+    .dependsOn(
       `zio-json-extra-jvm`,
       `zio-json-extra-js`,
 //      `zio-json-diffson-jvm`,
