@@ -6,10 +6,10 @@ import scala.util.Try
 import xerial.sbt.Sonatype.autoImport._
 
 object Common {
-  val appName = EnvironmentGlobal.appName
+  lazy val appName="zio"
 
   lazy val commonGeneric = Seq(
-    homepage := Some(url("https://www.megl.io")),
+    homepage := Some(url("https://github.com/aparo/zio-json-extra")),
     licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0")),
     organization := "io.megl",
     crossScalaVersions := Versions.crossScalaVersions,
