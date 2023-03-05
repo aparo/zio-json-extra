@@ -1,7 +1,7 @@
 import sbtcrossproject.{ CrossType }
 import ReleaseTransformations._
+import xerial.sbt.Sonatype._
 
-publish / skip := true
 
 inThisBuild(
   Seq(
@@ -16,10 +16,24 @@ inThisBuild(
         url("https://github.com/aparo")
       )
     ),
-    ThisBuild / versionScheme := Some("early-semver"),
+    versionScheme := Some("early-semver"),
     parallelExecution := false,
-    scalafmtOnCompile := false
+    scalafmtOnCompile := false,
+    sonatypeProfileName := "io.megl",
+    publishMavenStyle := true,
+    licenses := Seq("APL2" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt")),
+    sonatypeProjectHosting := Some(GitHubHosting("aparo", "zio-json-extra", "alberto.paro@gmail.com")),
   )
+)
+
+val disableDocs = Seq[Setting[_]](
+  Compile / doc / sources                := Seq.empty,
+  Compile / packageDoc / publishArtifact := false
+)
+
+val disablePublishing = Seq[Setting[_]](
+  publishArtifact := false,
+  publish / skip  := true
 )
 
 lazy val root =
@@ -41,7 +55,8 @@ lazy val root =
 //      `zio-json-diffson-js`,
       `zio-json-exception-jvm`,
       `zio-json-exception-js`
-    )
+    )  .settings(disableDocs)
+  .settings(disablePublishing)
 
 lazy val `zio-json-extra` = ProjectUtils
   .setupCrossModule("zio-json-extra", CrossType.Pure)

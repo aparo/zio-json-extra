@@ -70,7 +70,8 @@ object Common {
           "-Yrangepos"
         )
       case _ => Nil
-    })
+    }),
+    publishTo:= sonatypePublishToBundle.value
   ) ++ Licensing.settings
 
   lazy val commonJvmSettings: Seq[Def.Setting[_]] = Seq(
