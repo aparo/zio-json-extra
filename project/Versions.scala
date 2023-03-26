@@ -4,6 +4,6 @@ object Versions {
 
   val scalaTest = "3.2.15"
   val zio       = "2.0.10"
-  val zioJson   = "0.4.2"
+  val zioJson   = "0.5.0"
 
 }
