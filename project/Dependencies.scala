@@ -42,7 +42,7 @@ object Dependencies {
 
   lazy val zioJsonDiffson = Def.settings {
     libraryDependencies ++= DependencyHelpers.compile(
-      "org.gnieh" %%% "diffson-core" % "4.3.0"
+      "org.gnieh" %%% "diffson-core" % "4.4.0"
     )
   } ++ crossTest
 
