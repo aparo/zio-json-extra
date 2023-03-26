@@ -19,7 +19,6 @@ package diffson
 import jsonpatch._
 import jsonpointer._
 import jsonmergepatch._
-import cats.{ Apply, FlatMap }
 import cats.implicits._
 import zio.json.ast._
 import zio._
@@ -59,8 +58,9 @@ package object zjson {
   implicit val pointerEncoder: JsonEncoder[Pointer] =
     JsonEncoder.string.contramap(_.show)
 
+  type ReturnEither[A]=Either[Throwable, A]
   implicit val pointerDecoder: JsonDecoder[Pointer] =
-    JsonDecoder.string.mapOrFail(v => Pointer.parse[Either[Throwable, _]](v).leftMap(_.getMessage))
+    JsonDecoder.string.mapOrFail(v => Pointer.parse[ReturnEither](v).leftMap(_.getMessage))
 
   implicit val operationEncoder: JsonEncoder[Operation[Json]] = Json.Obj.encoder.contramap {
     case Add(path, value) =>

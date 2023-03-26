@@ -43,16 +43,16 @@ lazy val root =
     .aggregate(
       `zio-json-extra-jvm`,
       `zio-json-extra-js`,
-//      `zio-json-diffson-jvm`,
-//      `zio-json-diffson-js`,
+     `zio-json-diffson-jvm`,
+     `zio-json-diffson-js`,
       `zio-json-exception-jvm`,
       `zio-json-exception-js`
     )
     .dependsOn(
       `zio-json-extra-jvm`,
       `zio-json-extra-js`,
-//      `zio-json-diffson-jvm`,
-//      `zio-json-diffson-js`,
+     `zio-json-diffson-jvm`,
+     `zio-json-diffson-js`,
       `zio-json-exception-jvm`,
       `zio-json-exception-js`
     )  .settings(disableDocs)
