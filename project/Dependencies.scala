@@ -27,8 +27,8 @@ object Dependencies {
     libraryDependencies ++= DependencyHelpers.compile(
       "dev.zio"                %%% "zio"                     % Versions.zio,
       "dev.zio"                %%% "zio-json"                % Versions.zioJson,
-      "org.scala-lang.modules" %%% "scala-collection-compat" % "2.11.0",
-      "io.github.cquiroz"      %%% "scala-java-time"         % "2.5.0"
+      "org.scala-lang.modules" %%% "scala-collection-compat" % "2.13.0",
+      "io.github.cquiroz"      %%% "scala-java-time"         % "2.6.0"
     ) ++ (CrossVersion.partialVersion(scalaVersion.value) match {
       case Some((2, minor)) if minor <= 13 =>
         Seq(
@@ -42,7 +42,7 @@ object Dependencies {
 
   lazy val zioJsonDiffson = Def.settings {
     libraryDependencies ++= DependencyHelpers.compile(
-      "org.gnieh" %%% "diffson-core" % "4.4.0"
+      "org.gnieh" %%% "diffson-core" % "4.6.0"
     )
   } ++ crossTest
 
